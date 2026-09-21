@@ -34,8 +34,8 @@ describe('10.1 HTTP(S) Binding', function() {
     const endpoint = didResolver.endpoint;
     const validDids = didResolver.supportedDids.valid;
     // These fields are optional in the implementation config
-    const deactivatedDid = didResolver.supportedDids.deactivated || null;
-    const notFoundDid = didResolver.supportedDids.notFound || null;
+    const deactivatedDids = didResolver.supportedDids.deactivated || [];
+    const notFoundDids = didResolver.supportedDids.notFound || [];
     // derefUrls: [{didUrl, dereferencingOptions}] for DID URL
     // dereferencing tests
     const derefUrls = didResolver.supportedDids.derefUrls || [];
@@ -223,12 +223,15 @@ describe('10.1 HTTP(S) Binding', function() {
       });
 
       // Normative: "NOT_FOUND → 404"
-      // Requires notFound DID to be set in the implementation config
-      if(notFoundDid) {
+      // Requires one or more notFoundDids to be set in the implementation
+      // config, each as an object: {did, resolutionOptions}
+      notFoundDids.forEach(({did, resolutionOptions}) => {
+        const baseUrl = `${endpoint}/${did}`;
+        const url = addQueryParametersToUrl(baseUrl, resolutionOptions);
+
         it('NOT_FOUND error MUST map to HTTP status 404', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const url = `${endpoint}/${notFoundDid}`;
           const rv = await fetch(url, {
             headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
           });
@@ -237,7 +240,7 @@ describe('10.1 HTTP(S) Binding', function() {
           checkErrorResolutionResult(resolutionResult,
             'https://www.w3.org/ns/did#NOT_FOUND');
         });
-      }
+      });
 
       // Normative: "REPRESENTATION_NOT_SUPPORTED → 406"
       it('REPRESENTATION_NOT_SUPPORTED error MUST map to HTTP ' +
@@ -264,19 +267,22 @@ describe('10.1 HTTP(S) Binding', function() {
       // Normative: "If the DID resolution or DID URL dereferencing function
       //   returns a deactivated metadata property with the value true …
       //   The HTTP response status code MUST be 410"
-      // Requires deactivated DID to be set in the implementation config
-      if(deactivatedDid) {
+      // Requires deactivatedDids: [{did, resolutionOptions}] in the
+      // implementation config
+      deactivatedDids.forEach(({did, resolutionOptions}) => {
+        const baseUrl = `${endpoint}/${did}`;
+        const url = addQueryParametersToUrl(baseUrl, resolutionOptions);
+
         it('If deactivated metadata property is true, ' +
           'HTTP response status MUST be 410', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const url = `${endpoint}/${deactivatedDid}`;
           const rv = await fetch(url, {
             headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
           });
           rv.status.should.equal(410);
         });
-      }
+      });
 
       // --- DID URL Dereferencing binding ---
       // Tests below run only when the implementation config provides
