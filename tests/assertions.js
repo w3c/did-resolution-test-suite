@@ -7,37 +7,40 @@ const ajv = new Ajv({allErrors: true, strict: false, validateSchema: false});
 const validateDidDocument = ajv.compile(didSchema);
 
 export function checkSuccessfulResolutionResult(resolutionResult) {
-  resolutionResult.should.be.an('object');
-  resolutionResult.should.have.property('didResolutionMetadata');
-  resolutionResult.didResolutionMetadata.should.be.an('object');
-  resolutionResult.should.have.property('didDocument');
-  resolutionResult.didDocument.should.be.an('object');
+  expect(resolutionResult,
+    'DID resolution result must be an object').to.be.an('object');
+  expect(resolutionResult.didResolutionMetadata,
+    'didResolutionMetadata must be an object').to.be.an('object');
   checkConformantDidDocument(resolutionResult.didDocument);
-  resolutionResult.should.have.property('didDocumentMetadata');
-  resolutionResult.didDocumentMetadata.should.be.an('object');
+  expect(resolutionResult.didDocumentMetadata,
+    'didDocumentMetadata must be an object').to.be.an('object');
 }
 
 export function checkErrorResolutionResult(resolutionResult,
   expectedErrorType) {
 
-  resolutionResult.should.be.an('object');
-  resolutionResult.should.have.property('didResolutionMetadata');
-  resolutionResult.didResolutionMetadata.should.be.an('object');
-  resolutionResult.didResolutionMetadata.should.have.property('error');
-  resolutionResult.didResolutionMetadata.error.should.be.an('object');
-  resolutionResult.didResolutionMetadata.error.should.have.property('type');
+  expect(resolutionResult,
+    'DID resolution result must be an object').to.be.an('object');
+  expect(resolutionResult.didResolutionMetadata,
+    'didResolutionMetadata must be an object').to.be.an('object');
+  const {error} = resolutionResult.didResolutionMetadata;
+  expect(error, 'didResolutionMetadata.error must be an object with a ' +
+    '`type` property (e.g. {type: "https://www.w3.org/ns/did#NOT_FOUND"})')
+    .to.be.an('object').that.has.property('type');
   if(expectedErrorType) {
-    resolutionResult.didResolutionMetadata.error.type.should
-      .equal(expectedErrorType);
+    expect(error.type, 'didResolutionMetadata.error.type')
+      .to.equal(expectedErrorType);
   }
-  resolutionResult.should.have.property('didDocument');
-  expect(resolutionResult.didDocument).to.be.null;
-  resolutionResult.should.have.property('didDocumentMetadata');
-  resolutionResult.didDocumentMetadata.should.be.an('object');
+  expect(resolutionResult,
+    'didDocument must be present and null on error')
+    .to.have.property('didDocument', null);
+  expect(resolutionResult.didDocumentMetadata,
+    'didDocumentMetadata must be an object').to.be.an('object');
 }
 
 export function checkConformantDidDocument(didDocument) {
-  didDocument.should.be.an('object');
+  expect(didDocument, 'didDocument must be an object').to.be.an('object');
   const isValid = validateDidDocument(didDocument);
-  isValid.should.be.true;
+  expect(isValid, 'didDocument does not conform to the DID document ' +
+    'schema: ' + ajv.errorsText(validateDidDocument.errors)).to.be.true;
 }
