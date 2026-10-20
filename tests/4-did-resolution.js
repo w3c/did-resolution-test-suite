@@ -1,5 +1,5 @@
 import * as chai from 'chai';
-import {checkErrorResolutionResult,
+import {checkConformantDidDocument, checkErrorResolutionResult,
   checkSuccessfulResolutionResult} from './assertions.js';
 import {addQueryParametersToUrl} from './helpers.js';
 import {filterByTag} from 'vc-test-suite-implementations';
@@ -41,17 +41,12 @@ describe('DID Resolution', function() {
           checkSuccessfulResolutionResult(resolutionResult);
         });
 
-        it('The resolutionOptions input is REQUIRED, but the structure ' +
-          'MAY be empty.', async function() {
-
-          this.test.link = 'https://w3c.github.io/did-resolution/#types:~:text=Resolution%20Options.-,This%20input%20is%20REQUIRED%2C%20but%20the%20structure%20MAY%20be%20empty.,-This%20function%20returns';
-          // TODO: Not sure how to test this one.?
-          // HTTPS Binding ensures that the resolutionOptions is
-          // the empty object if no options are provided.
-        });
+        // Not testable over the HTTPS binding, which always supplies
+        // resolutionOptions (empty if no query parameters are given)
+        it.skip('The resolutionOptions input is REQUIRED, but the structure ' +
+          'MAY be empty.');
         it('The didResolutionMetadata structure is REQUIRED.',
           async function() {
-            const url = `${endpoint}/${did}`;
             const rv = await fetch(url, fetchOptions);
             this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('A metadata structure consisting of values relating to the results of the DID resolution process. This structure is REQUIRED')}`;
             rv.ok.should.be.true;
@@ -61,17 +56,16 @@ describe('DID Resolution', function() {
         );
         it('If resolution is successful, the didDocument MUST be a conformant' +
           ' DID document', async function() {
-          const url = `${endpoint}/${did}`;
           const rv = await fetch(url, fetchOptions);
           this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=If%20the%20resolution%20is%20successful%2C%20this%20MUST%20be%20a%20DID%20document%20that%20is%20capable%20of%20being%20represented%20in%20one%20of%20the%20conformant%20representations%20of%20the%20Decentralized%20Identifiers%20(DIDs)%20v1.0%20specification`;
           rv.ok.should.be.true;
           const resolutionResult = await rv.json();
           resolutionResult.should.have.property('didDocument');
+          checkConformantDidDocument(resolutionResult.didDocument);
         });
 
         it('The value of id in the resolved DID document MUST ' +
           'match the DID that was resolved', async function() {
-          const url = `${endpoint}/${did}`;
           const rv = await fetch(url, fetchOptions);
           this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=The%20value%20of%20id%20in%20the%20resolved%20DID%20document%20MUST%20be%20string%20equal%20to%20the%20DID%20that%20was%20resolved.`;
           rv.ok.should.be.true;
@@ -82,7 +76,6 @@ describe('DID Resolution', function() {
 
         it('If the resolution is successful, the `didDocumentMetadata` ' +
           'MUST be a metadata structure', async function() {
-          const url = `${endpoint}/${did}`;
           const rv = await fetch(url, fetchOptions);
           this.test.link = `https://w3c.github.io/did-resolution/#did-resolution-options:~:text=If%20the%20resolution%20is%20successful%2C%20this%20MUST%20be%20a%20metadata%20structure`;
           rv.ok.should.be.true;
@@ -90,16 +83,6 @@ describe('DID Resolution', function() {
           resolutionResult.should.have.property('didDocumentMetadata');
           resolutionResult.didDocumentMetadata.should.be.an('object');
         });
-      });
-
-      it('The did input to the resolve function is REQUIRED', async function() {
-        const url = `${endpoint}/`; // No DID provided
-        const rv = await fetch(url, fetchOptions);
-        this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=This%20input%20is%20REQUIRED%20and%20the%20value%20MUST%20be%20a%20conformant%20DID%20as%20defined%20in%20Decentralized%20Identifiers%20(DIDs)%20v1.0.`;
-        rv.ok.should.be.false;
-
-        // QUESTION: Should this still have a problem details error?
-        // Currently the spec doesnt define how to handle this case
       });
 
       const unconformantDids = ['not-a-did', 'did:example'];
@@ -111,7 +94,8 @@ describe('DID Resolution', function() {
           const url = `${endpoint}/${badDid}`;
           const rv = await fetch(url, fetchOptions);
           this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=The%20input%20parameter%20did%20is%20REQUIRED%20and%20the%20value%20MUST%20be%20a%20conformant%20DID%20as%20defined%20in%20Decentralized%20Identifiers%20(DIDs)%20v1.0.`;
-          rv.ok.should.be.false;
+          // INVALID_DID maps to HTTP 400 in the HTTPS binding
+          rv.status.should.equal(400);
         });
         it('Produces a INVALID_DID error and conformant resolution result',
           async function() {

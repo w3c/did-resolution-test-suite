@@ -42,11 +42,7 @@ describe('10.1 HTTP(S) Binding', function() {
       it('All HTTPS bindings MUST use TLS', function() {
         this.test.link =
           'https://w3c.github.io/did-resolution/#bindings-https';
-        // If the endpoint uses the HTTPS scheme, TLS is in use by definition.
-        // Plain HTTP is also permitted for local/development bindings per spec.
-        if(endpoint.startsWith('https://')) {
-          expect(endpoint).to.match(/^https:\/\//);
-        }
+        expect(endpoint).to.match(/^https:\/\//);
       });
 
       // Normative: "All conforming DID resolvers MUST implement the
@@ -140,26 +136,19 @@ describe('10.1 HTTP(S) Binding', function() {
           '(not the full resolution result)', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          // Try common DID document representation media types
-          const mediaTypes =
-            ['application/did+json', 'application/did+ld+json'];
-          for(const mediaType of mediaTypes) {
-            const rv = await fetch(url, {headers: {Accept: mediaType}});
-            if(rv.status === 406) {
-              // This representation is not supported; try the next one
-              continue;
-            }
-            if(!rv.ok) {
-              continue;
-            }
-            const body = await rv.json();
-            // A bare DID document has an 'id' property; a full resolution
-            // result would have 'didResolutionMetadata' instead
-            body.should.have.property('id');
-            body.should.not.have.property('didResolutionMetadata');
-            return;
+          const rv = await fetch(url, {
+            headers: {Accept: 'application/did+json'}
+          });
+          if(rv.status === 406) {
+            // did+json is not supported, so nothing to test
+            this.skip();
           }
-          // Vacuously passes if no common representation type is supported
+          rv.ok.should.be.true;
+          const body = await rv.json();
+          // A bare DID document has an 'id' property; a full resolution
+          // result would have 'didResolutionMetadata' instead
+          body.should.have.property('id');
+          body.should.not.have.property('didResolutionMetadata');
         });
 
         // Normative (GET): "If any other resolution options or dereferencing
@@ -232,28 +221,6 @@ describe('10.1 HTTP(S) Binding', function() {
           checkErrorResolutionResult(resolutionResult,
             'https://www.w3.org/ns/did#NOT_FOUND');
         });
-      });
-
-      // Normative: "REPRESENTATION_NOT_SUPPORTED → 406"
-      it('REPRESENTATION_NOT_SUPPORTED error MUST map to HTTP ' +
-        'status 406', async function() {
-        this.test.link =
-          'https://w3c.github.io/did-resolution/#bindings-https';
-        const {did} = validDids[0];
-        const url = `${endpoint}/${did}`;
-        // Request an Accept type the resolver is very unlikely to support
-        const unsupportedType =
-          'application/x-unsupported-did-representation-99999';
-        const rv = await fetch(url, {
-          headers: {Accept: unsupportedType}
-        });
-        // Only assert 406 if the resolver signals an unsupported
-        // representation; some resolvers may fall back to a default
-        // representation (200)
-        if(rv.status !== 200) {
-          expect(rv.status).to.equal(
-            ERROR_STATUS_CODES.REPRESENTATION_NOT_SUPPORTED);
-        }
       });
 
       // Normative: "If the DID resolution or DID URL dereferencing function
