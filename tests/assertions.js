@@ -35,7 +35,8 @@ export function checkErrorResolutionResult(resolutionResult,
     'didDocument must be present and null on error')
     .to.have.property('didDocument', null);
   expect(resolutionResult.didDocumentMetadata,
-    'didDocumentMetadata must be an object').to.be.an('object');
+    'didDocumentMetadata must be an empty object on error')
+    .to.deep.equal({});
 }
 
 export function checkConformantDidDocument(didDocument) {

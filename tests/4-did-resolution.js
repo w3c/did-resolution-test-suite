@@ -91,26 +91,18 @@ describe('DID Resolution', function() {
       const unconformantDids = ['not-a-did', 'did:example'];
       for(const badDid of unconformantDids) {
 
-        it('The did input value MUST be a conformant DID as defined' +
-            ' in Decentralized Identifiers (DIDs) v1.0.', async function() {
+        it('The did input MUST be a conformant DID; otherwise produces an ' +
+          'INVALID_DID error and conformant resolution result',
+        async function() {
 
           const url = `${endpoint}/${badDid}`;
           const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=The%20input%20parameter%20did%20is%20REQUIRED%20and%20the%20value%20MUST%20be%20a%20conformant%20DID%20as%20defined%20in%20Decentralized%20Identifiers%20(DIDs)%20v1.0.`;
-          // INVALID_DID maps to HTTP 400 in the HTTPS binding
-          rv.status.should.equal(400);
+          this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('Validate that the input DID conforms to the did rule of the DID Syntax. If not, the DID resolver MUST return the following result:')}`;
+          rv.ok.should.be.false;
+          const resolutionResult = await rv.json();
+          checkErrorResolutionResult(resolutionResult, 'https://www.w3.org/ns/did#INVALID_DID');
         });
-        it('Produces a INVALID_DID error and conformant resolution result',
-          async function() {
-
-            const url = `${endpoint}/${badDid}`;
-            const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-            this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('Validate that the input DID conforms to the did rule of the DID Syntax. If not, the DID resolver MUST return the following result:')}`;
-            rv.ok.should.be.false;
-            const resolutionResult = await rv.json();
-            checkErrorResolutionResult(resolutionResult, 'https://www.w3.org/ns/did#INVALID_DID');
-          });
-        it('The error property in DID Document Metadata is REQUIRED when ' +
+        it('The error property in DID Resolution Metadata is REQUIRED when ' +
           'there is an error in the resolution process.', async function() {
 
           const url = `${endpoint}/${badDid}`;
@@ -149,6 +141,67 @@ describe('DID Resolution', function() {
         checkErrorResolutionResult(resolutionResult, 'https://www.w3.org/ns/did#METHOD_NOT_SUPPORTED');
       }
       );
+
+      // versionTime MUST be a datetime (see #did-parameters), so a
+      // non-datetime value is an invalid option. A resolver that doesn't
+      // support versionTime at all correctly stops earlier, at the
+      // FEATURE_NOT_SUPPORTED step, so either error is accepted
+      if(validDids.length > 0) {
+        it('If the resolution options are invalid, produces an ' +
+          'INVALID_OPTIONS (or FEATURE_NOT_SUPPORTED) error and conformant ' +
+          'resolution result',
+        async function() {
+          const url = addQueryParametersToUrl(`${endpoint}/${validDids[0].did}`,
+            {versionTime: 'not-a-datetime'});
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
+          this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('are valid. If not, the DID resolver MUST return the following result:')}`;
+          rv.ok.should.be.false;
+          const resolutionResult = await rv.json();
+          checkErrorResolutionResult(resolutionResult);
+          resolutionResult.didResolutionMetadata.error.type.should.be.oneOf([
+            'https://www.w3.org/ns/did#INVALID_OPTIONS',
+            'https://www.w3.org/ns/did#FEATURE_NOT_SUPPORTED'
+          ]);
+        });
+      }
+
+      // These fields are optional in the implementation config
+      const notFoundDids = didResolver.supportedDids.notFound || [];
+      notFoundDids.forEach(({did, resolutionOptions}) => {
+        const url = addQueryParametersToUrl(`${endpoint}/${did}`,
+          resolutionOptions);
+        it('If the DID does not exist, produces a NOT_FOUND error and ' +
+          'conformant resolution result', async function() {
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
+          this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('does not exist, return the following result:')}`;
+          rv.ok.should.be.false;
+          const resolutionResult = await rv.json();
+          checkErrorResolutionResult(resolutionResult, 'https://www.w3.org/ns/did#NOT_FOUND');
+        });
+      });
+
+      const deactivatedDids = didResolver.supportedDids.deactivated || [];
+      deactivatedDids.forEach(({did, resolutionOptions}) => {
+        const url = addQueryParametersToUrl(`${endpoint}/${did}`,
+          resolutionOptions);
+        it('If a DID has been deactivated, DID document metadata MUST ' +
+          'include the deactivated property with the boolean value true',
+        async function() {
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
+          this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('DID document metadata MUST include this property with the boolean value true')}`;
+          const resolutionResult = await rv.json();
+          resolutionResult.should.have.property('didDocumentMetadata');
+          resolutionResult.didDocumentMetadata.should.have.property(
+            'deactivated', true);
+        });
+        it('If the DID has been deactivated, the didDocument is null',
+          async function() {
+            const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
+            this.test.link = `https://w3c.github.io/did-resolution/#types:~:text=${encodeURIComponent('has been deactivated, return the following result:')}`;
+            const resolutionResult = await rv.json();
+            resolutionResult.should.have.property('didDocument', null);
+          });
+      });
 
     });
 

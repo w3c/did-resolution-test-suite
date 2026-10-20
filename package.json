@@ -1,6 +1,6 @@
 {
-  "name": "did-resolution-mocha-test-suite",
-  "version": "0.1.0",
+  "name": "did-resolution-test-suite",
+  "version": "0.2.0",
   "description": "A test suite for the DID Resolution specification using Mocha and Chai",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w3c-ccg/did-resolution-mocha-test-suite.git"
+    "url": "git+https://github.com/w3c/did-resolution-test-suite.git"
   },
   "keywords": [
     "W3C",
@@ -23,23 +23,23 @@
     "url": "https://digitalbazaar.com/"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
-    "ajv": "^8.18.0",
-    "chai": "^5.2.1",
+    "ajv": "^8.20.0",
+    "chai": "^6.3.0",
     "mocha": "11.7.0",
     "mocha-w3c-interop-reporter": "github:w3c-ccg/mocha-w3c-interop-reporter#v1.11.0",
     "vc-test-suite-implementations": "github:w3c-ccg/vc-test-suite-implementations"
   },
   "devDependencies": {
-    "@digitalbazaar/eslint-config": "^8.0.1",
-    "eslint": "^9.39.3",
-    "eslint-plugin-jsdoc": "^62.7.0",
-    "eslint-plugin-unicorn": "^49.0.0"
+    "@digitalbazaar/eslint-config": "^9.0.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-jsdoc": "^65.4.0",
+    "eslint-plugin-unicorn": "^78.0.0"
   },
   "bugs": {
-    "url": "https://github.com/w3c-ccg/did-resolution-mocha-test-suite/issues"
+    "url": "https://github.com/w3c/did-resolution-test-suite/issues"
   },
-  "homepage": "https://github.com/w3c-ccg/did-resolution-mocha-test-suite#readme"
+  "homepage": "https://github.com/w3c/did-resolution-test-suite#readme"
 }
