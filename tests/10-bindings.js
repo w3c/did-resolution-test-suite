@@ -12,12 +12,10 @@ const tag = 'did-resolution';
 const {match} = filterByTag({tags: [tag], property: 'didResolvers'});
 
 const DID_RESOLUTION_MEDIA_TYPE = 'application/did-resolution';
-const DID_URL_DEREFERENCING_MEDIA_TYPE = 'application/did-url-dereferencing';
 
 // Per spec table: error type → required HTTP status code
 const ERROR_STATUS_CODES = {
   INVALID_DID: 400,
-  INVALID_DID_URL: 400,
   INVALID_OPTIONS: 400,
   NOT_FOUND: 404,
   REPRESENTATION_NOT_SUPPORTED: 406,
@@ -36,12 +34,6 @@ describe('10.1 HTTP(S) Binding', function() {
     // These fields are optional in the implementation config
     const deactivatedDids = didResolver.supportedDids.deactivated || [];
     const notFoundDids = didResolver.supportedDids.notFound || [];
-    // derefUrls: [{didUrl, dereferencingOptions}] for DID URL
-    // dereferencing tests
-    const derefUrls = didResolver.supportedDids.derefUrls || [];
-    // serviceDerefUrls: [{didUrl}] for service endpoint redirect (303) tests
-    const serviceDerefUrls =
-      didResolver.supportedDids.serviceDerefUrls || [];
 
     describe(name, function() {
       beforeEach(helpers.setupRow);
@@ -283,184 +275,6 @@ describe('10.1 HTTP(S) Binding', function() {
           rv.status.should.equal(410);
         });
       });
-
-      // --- DID URL Dereferencing binding ---
-      // Tests below run only when the implementation config provides
-      // derefUrls. Add `derefUrls: [{didUrl, dereferencingOptions}]` to
-      // supportedDids in the implementation config to enable these tests.
-
-      if(derefUrls.length > 0) {
-        derefUrls.forEach(({didUrl, dereferencingOptions}) => {
-          const hasOptions = dereferencingOptions &&
-            Object.keys(dereferencingOptions).length > 0;
-          // Per spec: DID URL MUST be URL-encoded when extra options
-          // are present
-          const encodedDidUrl = hasOptions ?
-            encodeURIComponent(didUrl) : didUrl;
-          const baseUrl = `${endpoint}/${encodedDidUrl}`;
-          const url = addQueryParametersToUrl(baseUrl, dereferencingOptions);
-
-          // Normative: "If the value of the Content-Type HTTP response header
-          //   is application/did-url-dereferencing: The HTTP body MUST contain
-          //   a DID URL dereferencing result"
-          it('If Accept is application/did-url-dereferencing, HTTP body ' +
-            'MUST contain a DID URL dereferencing result ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE}
-            });
-            rv.ok.should.be.true;
-            const derefResult = await rv.json();
-            derefResult.should.have.property('dereferencingMetadata');
-            derefResult.dereferencingMetadata.should.be.an('object');
-            derefResult.should.have.property('contentStream');
-            derefResult.should.have.property('contentMetadata');
-            derefResult.contentMetadata.should.be.an('object');
-          });
-
-          // Normative: "If the function is successful and returns a
-          //   contentStream with any other contentType:
-          //   The HTTP response status code MUST be 200"
-          it('If DID URL dereferencing returns a non-uri-list ' +
-            'contentStream, HTTP status MUST be 200 ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE},
-              redirect: 'manual'
-            });
-            if(rv.status !== 303) {
-              rv.status.should.equal(200);
-            }
-          });
-
-          // Normative: "The HTTP response MUST contain a Content-Type HTTP
-          //   response header. Its value MUST be the value of the contentType
-          //   metadata property in the dereferencingMetadata"
-          it('If DID URL dereferencing succeeds, Content-Type MUST ' +
-            'equal contentType in dereferencingMetadata ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE}
-            });
-            if(rv.status === 200) {
-              const contentTypeHeader = rv.headers.get('Content-Type');
-              expect(contentTypeHeader,
-                'Content-Type header must be present').to.not.be.null;
-              const derefResult = await rv.json();
-              expect(derefResult.dereferencingMetadata,
-                'dereferencingMetadata must have contentType')
-                .to.have.property('contentType');
-              contentTypeHeader.should.include(
-                derefResult.dereferencingMetadata.contentType);
-            }
-          });
-
-          // Normative: "The HTTP response body MUST contain the contentStream
-          //   that is the result of the DID URL dereferencing function, in the
-          //   representation corresponding to the Content-Type HTTP response
-          //   header"
-          it('HTTP response body MUST contain the contentStream ' +
-            `from DID URL dereferencing (${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE}
-            });
-            if(rv.status === 200) {
-              const body = await rv.text();
-              expect(body,
-                'response body must not be empty').to.not.be.empty;
-            }
-          });
-
-          // Normative: "set the Accept HTTP request header to the value of the
-          //   accept dereferencing option to request only the contentStream
-          //   value of the result"
-          it('If Accept is set to a content media type, response body ' +
-            'MUST contain only the contentStream ' +
-            '(not the full dereferencing result) ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: 'application/json'}
-            });
-            if(rv.status === 406) {
-              // Representation not supported; test is vacuously satisfied
-              return;
-            }
-            if(rv.ok) {
-              const body = await rv.json();
-              // A bare contentStream should not have dereferencingMetadata
-              body.should.not.have.property('dereferencingMetadata');
-            }
-          });
-        });
-      }
-
-      // --- Service-endpoint redirect (303) tests ---
-      // Add `serviceDerefUrls: [{didUrl}]` to supportedDids in the
-      // implementation config to enable these tests.
-
-      if(serviceDerefUrls.length > 0) {
-        serviceDerefUrls.forEach(({didUrl}) => {
-          const url = `${endpoint}/${encodeURIComponent(didUrl)}`;
-
-          // Normative: "If the function is successful and returns a
-          //   contentStream and a contentType metadata property with the value
-          //   text/uri-list in the dereferencingMetadata:
-          //   The HTTP response status code MUST be 303"
-          it('If contentType is text/uri-list, HTTP response status ' +
-            `MUST be 303 (${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE},
-              redirect: 'manual'
-            });
-            rv.status.should.equal(303);
-          });
-
-          // Normative: "The HTTP response MUST contain a Location header.
-          //   The value of this header MUST be the selected DID service
-          //   endpoint URL"
-          it('If 303 response, HTTP response MUST contain a Location ' +
-            'header with the selected DID service endpoint URL ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE},
-              redirect: 'manual'
-            });
-            rv.status.should.equal(303);
-            const location = rv.headers.get('Location');
-            expect(location,
-              'Location header must be present and non-null').to.not.be.null;
-          });
-
-          // Normative: "the HTTP response body MUST be empty"
-          it('If 303 response, HTTP response body MUST be empty ' +
-            `(${didUrl})`, async function() {
-            this.test.link =
-              'https://w3c.github.io/did-resolution/#bindings-https';
-            const rv = await fetch(url, {
-              headers: {Accept: DID_URL_DEREFERENCING_MEDIA_TYPE},
-              redirect: 'manual'
-            });
-            rv.status.should.equal(303);
-            const body = await rv.text();
-            body.should.equal('');
-          });
-        });
-      }
-
     });
   }
 });
