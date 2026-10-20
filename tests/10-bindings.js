@@ -1,7 +1,7 @@
 import * as chai from 'chai';
+import {addQueryParametersToUrl, cachedFetch} from './helpers.js';
 import {checkErrorResolutionResult,
   checkSuccessfulResolutionResult} from './assertions.js';
-import {addQueryParametersToUrl} from './helpers.js';
 import {filterByTag} from 'vc-test-suite-implementations';
 import {helpers} from 'mocha-w3c-interop-reporter';
 
@@ -28,7 +28,10 @@ const ERROR_STATUS_CODES = {
 describe('10.1 HTTP(S) Binding', function() {
   helpers.setupMatrix.call(this, match);
   for(const [name, implementation] of match) {
-    const didResolver = implementation.settings.didResolvers[0];
+    // Only the first didResolver tagged `did-resolution` is tested; any
+    // others tagged for this suite are ignored
+    const didResolver = implementation.settings.didResolvers
+      .find(({tags}) => tags.includes(tag));
     const endpoint = didResolver.endpoint;
     const validDids = didResolver.supportedDids.valid;
     // These fields are optional in the implementation config
@@ -55,10 +58,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'version of the HTTPS binding', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            method: 'GET',
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.ok.should.be.true;
         });
 
@@ -69,9 +69,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'contain a DID resolution result', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.ok.should.be.true;
           const resolutionResult = await rv.json();
           checkSuccessfulResolutionResult(resolutionResult);
@@ -83,9 +81,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'HTTP response status code MUST be 200', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.status.should.equal(200);
         });
 
@@ -97,9 +93,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'contentType in didResolutionMetadata', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.ok.should.be.true;
           const contentTypeHeader = rv.headers.get('Content-Type');
           expect(contentTypeHeader,
@@ -119,9 +113,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'of the DID resolution function', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.ok.should.be.true;
           const resolutionResult = await rv.json();
           resolutionResult.should.have.property('didDocument');
@@ -136,9 +128,7 @@ describe('10.1 HTTP(S) Binding', function() {
           '(not the full resolution result)', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: 'application/did+json'}
-          });
+          const rv = await cachedFetch(url, 'application/did+json');
           if(rv.status === 406) {
             // did+json is not supported, so nothing to test
             this.skip();
@@ -165,9 +155,7 @@ describe('10.1 HTTP(S) Binding', function() {
           const encodedUrl = addQueryParametersToUrl(
             `${endpoint}/${encodedDid}`, resolutionOptions
           );
-          const rv = await fetch(encodedUrl, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(encodedUrl, DID_RESOLUTION_MEDIA_TYPE);
           rv.ok.should.be.true;
           const resolutionResult = await rv.json();
           checkSuccessfulResolutionResult(resolutionResult);
@@ -183,9 +171,7 @@ describe('10.1 HTTP(S) Binding', function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
           const url = `${endpoint}/${badDid}`;
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.status.should.equal(ERROR_STATUS_CODES.INVALID_DID);
         });
       }
@@ -197,9 +183,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'https://w3c.github.io/did-resolution/#bindings-https';
         const unsupportedDid = 'did:unsupported:123456789abcdefghi';
         const url = `${endpoint}/${unsupportedDid}`;
-        const rv = await fetch(url, {
-          headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-        });
+        const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
         rv.status.should.equal(ERROR_STATUS_CODES.METHOD_NOT_SUPPORTED);
       });
 
@@ -213,9 +197,7 @@ describe('10.1 HTTP(S) Binding', function() {
         it('NOT_FOUND error MUST map to HTTP status 404', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.status.should.equal(ERROR_STATUS_CODES.NOT_FOUND);
           const resolutionResult = await rv.json();
           checkErrorResolutionResult(resolutionResult,
@@ -236,9 +218,7 @@ describe('10.1 HTTP(S) Binding', function() {
           'HTTP response status MUST be 410', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await fetch(url, {
-            headers: {Accept: DID_RESOLUTION_MEDIA_TYPE}
-          });
+          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
           rv.status.should.equal(410);
         });
       });
