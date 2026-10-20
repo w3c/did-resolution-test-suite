@@ -12,14 +12,23 @@
         <script type="text/javascript" class="remove">
           // set this in the config section
           var respecConfig = {
-      "specStatus": "unofficial",
-      "shortName": "did-resolution-mocha-test-suite",
+      "specStatus": "NOTE",
+      "group": "did",
+      "shortName": "did-resolution-test-suite",
       "subtitle": "Interoperability Report for DID Resolution Test Suite",
-      "github": "https://github.com/w3c-ccg/did-resolution-mocha-test-suite",
-      "edDraftURI": "https://w3c-ccg.github.io/did-resolution-mocha-test-suite/",
+      "github": "https://github.com/w3c/did-resolution-test-suite",
+      "edDraftURI": "https://w3c.github.io/did-resolution-test-suite/",
       "doJsonLd": true,
       "includePermalinks": false,
-      "editors": [],
+      "editors": [
+        {
+          "name": "Will Abramson",
+          "mailto": "will@legreq.com",
+          "company": "Legendary Requirements",
+          "companyUrl": "http://legreq.com",
+          "w3cid": 107490
+        }
+      ],
       "authors": []
     };
         </script>
@@ -149,7 +158,7 @@
     <section class="informative" id="conformance-testing-results">
       <h2> Conformance Testing Results </h2>
       <p>
-        These tests were run on <time>27 March 2026 at 2:16 pm UTC</time>
+        These tests were run on <time>20 October 2026 at 3:23 pm UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -213,7 +222,6 @@
                   </div>
                 </th>
                     <th class="no-wrap small-font text-center">DIF</th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar, Inc.</th>
                     <th class="no-wrap small-font text-center">cheqd</th>
                     <th class="no-wrap small-font text-center">iden3</th>
                 </thead>
@@ -224,11 +232,6 @@
                     <a href="https://w3c.github.io/did-resolution/#bindings-https">All HTTPS bindings MUST use TLS</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
@@ -262,19 +265,8 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:74:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:74:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:62:27)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -301,19 +293,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:87:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:87:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:73:27)</pre>
                       </details>
                     </div>
                   </td>
@@ -338,21 +318,9 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected 500 to equal 200</summary>
-                        <pre>AssertionError: expected 500 to equal 200
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:101:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
                         <summary>expected 406 to equal 200</summary>
                         <pre>AssertionError: expected 406 to equal 200
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:101:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:85:28)</pre>
                       </details>
                     </div>
                   </td>
@@ -379,19 +347,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:115:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:115:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:97:27)</pre>
                       </details>
                     </div>
                   </td>
@@ -418,19 +374,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:137:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:137:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:117:27)</pre>
                       </details>
                     </div>
                   </td>
@@ -446,11 +390,6 @@
                     <a href="https://w3c.github.io/did-resolution/#bindings-https">If Accept is set to a DID representation media type, response body MUST contain only the didDocument (not the full resolution result)</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
@@ -484,19 +423,8 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:190:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:190:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:159:27)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -521,21 +449,10 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected 500 to equal 400</summary>
-                        <pre>AssertionError: expected 500 to equal 400
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:208:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
                         <summary>expected 406 to equal 400</summary>
                         <pre>AssertionError: expected 406 to equal 400
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:208:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:175:28)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -560,21 +477,10 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected 500 to equal 400</summary>
-                        <pre>AssertionError: expected 500 to equal 400
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:208:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
                         <summary>expected 406 to equal 400</summary>
                         <pre>AssertionError: expected 406 to equal 400
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:208:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:175:28)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -599,21 +505,10 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected 500 to equal 501</summary>
-                        <pre>AssertionError: expected 500 to equal 501
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:222:26)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
                         <summary>expected 406 to equal 501</summary>
                         <pre>AssertionError: expected 406 to equal 501
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:222:26)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:187:26)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -629,27 +524,10 @@
                     <a href="https://w3c.github.io/did-resolution/#bindings-https">NOT_FOUND error MUST map to HTTP status 404</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
                     <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected 400 to equal 404</summary>
-                        <pre>AssertionError: expected 400 to equal 404
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:235:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected { …(3) } to have property &#x27;didResolutionMetadata&#x27;</summary>
-                        <pre>AssertionError: expected { …(3) } to have property &#x27;didResolutionMetadata&#x27;
-                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/assertions.js:24:32)
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:237:11)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
+                      <span class="err hide">Test skipped.</span>
                     </div>
                   </td>
                   <td class="failed not-optional highlight-on-hover text-center">
@@ -658,48 +536,9 @@
                       <details class="err hide">
                         <summary>expected 406 to equal 404</summary>
                         <pre>AssertionError: expected 406 to equal 404
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:235:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:201:28)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected 400 to equal 404</summary>
-                        <pre>AssertionError: expected 400 to equal 404
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:235:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-              </tr>
-              <tr class="confirmed">
-                <!--This is the name of the test-->
-                <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#bindings-https">REPRESENTATION_NOT_SUPPORTED error MUST map to HTTP status 406</a>
-                </td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected 500 to equal 406</summary>
-                        <pre>AssertionError: expected 500 to equal 406
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:259:32)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -714,26 +553,10 @@
                     <a href="https://w3c.github.io/did-resolution/#bindings-https">If deactivated metadata property is true, HTTP response status MUST be 410</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
                     <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected 400 to equal 410</summary>
-                        <pre>AssertionError: expected 400 to equal 410
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:277:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected 404 to equal 410</summary>
-                        <pre>AssertionError: expected 404 to equal 410
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:277:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
+                      <span class="err hide">Test skipped.</span>
                     </div>
                   </td>
                   <td class="failed not-optional highlight-on-hover text-center">
@@ -742,8 +565,8 @@
                       <details class="err hide">
                         <summary>expected 406 to equal 410</summary>
                         <pre>AssertionError: expected 406 to equal 410
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/10-bindings.js:277:28)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/10-bindings.js:222:28)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -780,7 +603,6 @@
                   </div>
                 </th>
                     <th class="no-wrap small-font text-center">DIF</th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar, Inc.</th>
                     <th class="no-wrap small-font text-center">cheqd</th>
                     <th class="no-wrap small-font text-center">iden3</th>
                 </thead>
@@ -791,11 +613,6 @@
                     Implementation has at least one valid DID to test
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
@@ -829,47 +646,8 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:38:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:41:27)</pre>
                       </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:38:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-              </tr>
-              <tr class="confirmed">
-                <!--This is the name of the test-->
-                <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Resolution%20Options.-,This%20input%20is%20REQUIRED%2C%20but%20the%20structure%20MAY%20be%20empty.,-This%20function%20returns">The resolutionOptions input is REQUIRED, but the structure MAY be empty.</a>
-                </td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -895,19 +673,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:57:29)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:57:29)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:55:29)</pre>
                       </details>
                     </div>
                   </td>
@@ -934,19 +700,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:67:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:67:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:64:27)</pre>
                       </details>
                     </div>
                   </td>
@@ -973,19 +727,7 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:77:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:77:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:74:27)</pre>
                       </details>
                     </div>
                   </td>
@@ -1012,74 +754,8 @@
                       <details class="err hide">
                         <summary>expected false to be true</summary>
                         <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:88:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:84:27)</pre>
                       </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected false to be true</summary>
-                        <pre>AssertionError: expected false to be true
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:88:27)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-              </tr>
-              <tr class="confirmed">
-                <!--This is the name of the test-->
-                <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;This%20input%20is%20REQUIRED%20and%20the%20value%20MUST%20be%20a%20conformant%20DID%20as%20defined%20in%20Decentralized%20Identifiers%20(DIDs)%20v1.0.">The did input to the resolve function is REQUIRED</a>
-                </td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-              </tr>
-              <tr class="confirmed">
-                <!--This is the name of the test-->
-                <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;The%20input%20parameter%20did%20is%20REQUIRED%20and%20the%20value%20MUST%20be%20a%20conformant%20DID%20as%20defined%20in%20Decentralized%20Identifiers%20(DIDs)%20v1.0.">The did input value MUST be a conformant DID as defined in Decentralized Identifiers (DIDs) v1.0.</a>
-                </td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -1091,18 +767,18 @@
               <tr class="at-risk">
                 <!--This is the name of the test-->
                 <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Validate%20that%20the%20input%20DID%20conforms%20to%20the%20did%20rule%20of%20the%20DID%20Syntax.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">Produces a INVALID_DID error and conformant resolution result</a>
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Validate%20that%20the%20input%20DID%20conforms%20to%20the%20did%20rule%20of%20the%20DID%20Syntax.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">The did input MUST be a conformant DID; otherwise produces an INVALID_DID error and conformant resolution result</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="failed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected &#x27;INVALID_DID&#x27; to equal &#x27;https://www.w3.org/ns/did#INVALID_DID&#x27;</summary>
-                        <pre>AssertionError: expected &#x27;INVALID_DID&#x27; to equal &#x27;https://www.w3.org/ns/did#INVALID_DID&#x27;
-                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/assertions.js:31:8)
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:124:13)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        <summary>didResolutionMetadata.error.type: expected &#x27;INVALID_DID&#x27; to equal &#x27;https://www.w3.org/ns/did#INVALID_DID&#x27;</summary>
+                        <pre>AssertionError: didResolutionMetadata.error.type: expected &#x27;INVALID_DID&#x27; to equal &#x27;https://www.w3.org/ns/did#INVALID_DID&#x27;
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:32:11)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:103:11)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -1110,27 +786,11 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON</summary>
-                        <pre>SyntaxError: Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON
-                        at JSON.parse (&lt;anonymous&gt;)
-                        at parseJSONFromBytes (node:internal/deps/undici/undici:5852:19)
-                        at successSteps (node:internal/deps/undici/undici:5833:27)
-                        at fullyReadBody (node:internal/deps/undici/undici:4725:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-                        at async consumeBody (node:internal/deps/undici/undici:5842:7)
-                        at async Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:123:38)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected &#x27;representationNotSupported&#x27; to be an object</summary>
-                        <pre>AssertionError: expected &#x27;representationNotSupported&#x27; to be an object
-                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/assertions.js:27:58)
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:124:13)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        <summary>didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object</summary>
+                        <pre>AssertionError: didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:29:12)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:103:11)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -1143,28 +803,12 @@
               <tr class="confirmed">
                 <!--This is the name of the test-->
                 <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;If%20the%20resolution%20is%20unsuccessful%2C%20this%20structure%20MUST%20contain%20an%20error%20property%20describing%20the%20error.">The error property in DID Document Metadata is REQUIRED when there is an error in the resolution process.</a>
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;If%20the%20resolution%20is%20unsuccessful%2C%20this%20structure%20MUST%20contain%20an%20error%20property%20describing%20the%20error.">The error property in DID Resolution Metadata is REQUIRED when there is an error in the resolution process.</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON</summary>
-                        <pre>SyntaxError: Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON
-                        at JSON.parse (&lt;anonymous&gt;)
-                        at parseJSONFromBytes (node:internal/deps/undici/undici:5852:19)
-                        at successSteps (node:internal/deps/undici/undici:5833:27)
-                        at fullyReadBody (node:internal/deps/undici/undici:4725:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-                        at async consumeBody (node:internal/deps/undici/undici:5842:7)
-                        at async Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:133:36)</pre>
-                      </details>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -1193,26 +837,9 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON</summary>
-                        <pre>SyntaxError: Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON
-                        at JSON.parse (&lt;anonymous&gt;)
-                        at parseJSONFromBytes (node:internal/deps/undici/undici:5852:19)
-                        at successSteps (node:internal/deps/undici/undici:5833:27)
-                        at fullyReadBody (node:internal/deps/undici/undici:4725:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-                        at async consumeBody (node:internal/deps/undici/undici:5842:7)
-                        at async Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:146:36)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
                         <summary>expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocumentMetadata&#x27;</summary>
                         <pre>AssertionError: expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocumentMetadata&#x27;
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:147:40)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:126:40)</pre>
                       </details>
                     </div>
                   </td>
@@ -1232,11 +859,11 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>expected &#x27;METHOD_NOT_SUPPORTED&#x27; to equal &#x27;https://www.w3.org/ns/did#METHOD_NOT_…&#x27;</summary>
-                        <pre>AssertionError: expected &#x27;METHOD_NOT_SUPPORTED&#x27; to equal &#x27;https://www.w3.org/ns/did#METHOD_NOT_…&#x27;
-                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/assertions.js:31:8)
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:162:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        <summary>didResolutionMetadata.error.type: expected &#x27;METHOD_NOT_SUPPORTED&#x27; to equal &#x27;https://www.w3.org/ns/did#METHOD_NOT_…&#x27;</summary>
+                        <pre>AssertionError: didResolutionMetadata.error.type: expected &#x27;METHOD_NOT_SUPPORTED&#x27; to equal &#x27;https://www.w3.org/ns/did#METHOD_NOT_…&#x27;
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:32:11)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:141:9)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
@@ -1244,33 +871,152 @@
                     <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <details class="err hide">
-                        <summary>Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON</summary>
-                        <pre>SyntaxError: Unexpected token &#x27;I&#x27;, &quot;Internal S&quot;... is not valid JSON
-                        at JSON.parse (&lt;anonymous&gt;)
-                        at parseJSONFromBytes (node:internal/deps/undici/undici:5852:19)
-                        at successSteps (node:internal/deps/undici/undici:5833:27)
-                        at fullyReadBody (node:internal/deps/undici/undici:4725:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-                        at async consumeBody (node:internal/deps/undici/undici:5842:7)
-                        at async Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:161:34)</pre>
-                      </details>
-                    </div>
-                  </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <details class="err hide">
-                        <summary>expected &#x27;representationNotSupported&#x27; to be an object</summary>
-                        <pre>AssertionError: expected &#x27;representationNotSupported&#x27; to be an object
-                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/assertions.js:27:58)
-                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-mocha-test-suite/did-resolution-mocha-test-suite/tests/4-did-resolution.js:162:9)
-                        at process.processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+                        <summary>didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object</summary>
+                        <pre>AssertionError: didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:29:12)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:141:9)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
                       </details>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;are%20valid.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">If the resolution options are invalid, produces an INVALID_OPTIONS (or FEATURE_NOT_SUPPORTED) error and conformant resolution result</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>Unexpected token &#x27;N&#x27;, &quot;Not accept&quot;... is not valid JSON</summary>
+                        <pre>SyntaxError: Unexpected token &#x27;N&#x27;, &quot;Not accept&quot;... is not valid JSON
+                        at JSON.parse (&lt;anonymous&gt;)
+                        at parseJSONFromBytes (node:internal/deps/undici/undici:5895:19)
+                        at successSteps (node:internal/deps/undici/undici:5876:27)
+                        at fullyReadBody (node:internal/deps/undici/undici:4768:9)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+                        at async consumeBody (node:internal/deps/undici/undici:5885:7)
+                        at async Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:159:36)</pre>
+                      </details>
+                    </div>
+                  </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object</summary>
+                        <pre>AssertionError: didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:29:12)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:160:11)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
+                      </details>
+                    </div>
+                  </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>expected true to be false</summary>
+                        <pre>AssertionError: expected true to be false
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:158:27)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
+                      </details>
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;does%20not%20exist%2C%20return%20the%20following%20result%3A">If the DID does not exist, produces a NOT_FOUND error and conformant resolution result</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
+                    <div class="relative-pos">
+                      <span class="err hide">Test skipped.</span>
+                    </div>
+                  </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object</summary>
+                        <pre>AssertionError: didResolutionMetadata.error must be an object with a &#x60;type&#x60; property (e.g. {type: &quot;https://www.w3.org/ns/did#NOT_FOUND&quot;}): expected &#x27;representationNotSupported&#x27; to be an object
+                        at checkErrorResolutionResult (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/assertions.js:29:12)
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:179:11)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
+                      </details>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;DID%20document%20metadata%20MUST%20include%20this%20property%20with%20the%20boolean%20value%20true">If a DID has been deactivated, DID document metadata MUST include the deactivated property with the boolean value true</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
+                    <div class="relative-pos">
+                      <span class="err hide">Test skipped.</span>
+                    </div>
+                  </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocumentMetadata&#x27;</summary>
+                        <pre>AssertionError: expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocumentMetadata&#x27;
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:193:40)
+                        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)</pre>
+                      </details>
+                    </div>
+                  </td>
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
+                    <div class="relative-pos">
+                      <span class="err hide">Test skipped.</span>
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;has%20been%20deactivated%2C%20return%20the%20following%20result%3A">If the DID has been deactivated, the didDocument is null</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
+                    <div class="relative-pos">
+                      <span class="err hide">Test skipped.</span>
+                    </div>
+                  </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <details class="err hide">
+                        <summary>expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocument&#x27;</summary>
+                        <pre>AssertionError: expected { didResolutionMetadata: { …(4) } } to have property &#x27;didDocument&#x27;
+                        at Context.&lt;anonymous&gt; (file:///home/runner/work/did-resolution-test-suite/did-resolution-test-suite/tests/4-did-resolution.js:202:42)</pre>
+                      </details>
+                    </div>
+                  </td>
+                  <td class="pending not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">🚫</div>
+                    <div class="relative-pos">
+                      <span class="err hide">Test skipped.</span>
                     </div>
                   </td>
               </tr>
@@ -1329,7 +1075,7 @@
               <tr class="at-risk">
                 <!--This is the name of the test-->
                 <td class="subtest">
-                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Validate%20that%20the%20input%20DID%20conforms%20to%20the%20did%20rule%20of%20the%20DID%20Syntax.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">Produces a INVALID_DID error and conformant resolution result</a>
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Validate%20that%20the%20input%20DID%20conforms%20to%20the%20did%20rule%20of%20the%20DID%20Syntax.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">The did input MUST be a conformant DID; otherwise produces an INVALID_DID error and conformant resolution result</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="failed not-optional highlight-on-hover text-center">
@@ -1342,6 +1088,54 @@
                 <!--This is the name of the test-->
                 <td class="subtest">
                     <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;Determine%20whether%20the%20DID%20method%20of%20the%20input%20DID%20is%20supported%20by%20the%20DID%20resolver%20that%20implements%20this%20algorithm.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">If the DID method is not supported, produces a METHOD_NOT_SUPPORTED error and conformant resolution result</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;are%20valid.%20If%20not%2C%20the%20DID%20resolver%20MUST%20return%20the%20following%20result%3A">If the resolution options are invalid, produces an INVALID_OPTIONS (or FEATURE_NOT_SUPPORTED) error and conformant resolution result</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;does%20not%20exist%2C%20return%20the%20following%20result%3A">If the DID does not exist, produces a NOT_FOUND error and conformant resolution result</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;DID%20document%20metadata%20MUST%20include%20this%20property%20with%20the%20boolean%20value%20true">If a DID has been deactivated, DID document metadata MUST include the deactivated property with the boolean value true</a>
+                </td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                    </div>
+                  </td>
+              </tr>
+              <tr class="at-risk">
+                <!--This is the name of the test-->
+                <td class="subtest">
+                    <a href="https://w3c.github.io/did-resolution/#types:~:text&#x3D;has%20been%20deactivated%2C%20return%20the%20following%20result%3A">If the DID has been deactivated, the didDocument is null</a>
                 </td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="failed not-optional highlight-on-hover text-center">
