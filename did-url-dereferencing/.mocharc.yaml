@@ -1,0 +1,8 @@
+spec: 'did-url-dereferencing/tests'
+reporter: 'mocha-w3c-interop-reporter'
+reporterOptions:
+  - 'title=DID URL Dereferencing Test Suite'
+  - 'abstract=./did-url-dereferencing/abstract.hbs'
+  - 'reportDir=./reports/did-url-dereferencing'
+  - 'respec=./did-url-dereferencing/respecConfig.json'
+  - 'templateData=./reports/did-url-dereferencing/index.json'

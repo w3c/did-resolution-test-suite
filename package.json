@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha tests/ --timeout 15000",
     "test:withparams": "mocha tests/ --timeout 15000 --reporter mocha-w3c-interop-reporter --reporter-options title=\"DID Resolution Test Suite\",abstract=./abstract.hbs,reportDir=./reports,respec=./respecConfig.json,suiteLog=./suite.log,templateData=./reports/index.json",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:dereferencing": "mkdir -p reports/did-url-dereferencing && mocha --config did-url-dereferencing/.mocharc.yaml"
   },
   "repository": {
     "type": "git",

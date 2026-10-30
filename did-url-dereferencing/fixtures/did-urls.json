@@ -1,0 +1,365 @@
+{
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "invalid-not-a-did-url",
+      "section": "5.1.1",
+      "description": "Input that does not conform to the did-url rule ends processing with INVALID_DID_URL",
+      "didUrl": "not-a-did-url",
+      "expected": {
+        "error": "INVALID_DID_URL"
+      }
+    },
+    {
+      "id": "invalid-uppercase-method",
+      "section": "5.1.1",
+      "description": "Method names must be lowercase, so this does not conform to the did-url rule",
+      "didUrl": "did:TEST:deref",
+      "expected": {
+        "error": "INVALID_DID_URL"
+      }
+    },
+    {
+      "id": "resolution-error",
+      "section": "5.1.2",
+      "description": "A failed resolution surfaces as a resolution error. The did:test resolver returns did-resolution-result-not-found.json for any DID other than did:test:deref",
+      "didUrl": "did:test:notfound",
+      "expected": {
+        "error": "DEREFERENCING_ERROR_RESOLUTION_ERROR"
+      }
+    },
+    {
+      "id": "bare-did",
+      "section": "5.5",
+      "description": "No service, path or strategy-defining query parameter, so the DID document is returned",
+      "didUrl": "did:test:deref",
+      "expected": {
+        "content": {
+          "$ref": "did-resolution-result.json#/didDocument"
+        },
+        "errors": []
+      }
+    },
+    {
+      "id": "fragment",
+      "section": "5.1.5",
+      "description": "A fragment does not change the strategy; it is applied to the returned DID document when the handler result is used",
+      "didUrl": "did:test:deref#key-1",
+      "expected": {
+        "oneOf": [
+          {
+            "content": {
+              "$ref": "did-resolution-result.json#/didDocument"
+            },
+            "errors": []
+          },
+          {
+            "content": {
+              "$ref": "did-resolution-result.json#/didDocument/verificationMethod/0"
+            },
+            "errors": []
+          }
+        ]
+      },
+      "open": "Section 5.1.5 says the client might apply the fragment to the returned resource, so either the whole DID document or the #key-1 verification method is accepted"
+    },
+    {
+      "id": "version-id",
+      "section": "5.1.3",
+      "description": "versionId only affects resolution, not the handling strategy (Query Parameters Step)",
+      "didUrl": "did:test:deref?versionId=2",
+      "expected": {
+        "content": {
+          "$ref": "did-resolution-result.json#/didDocument"
+        },
+        "errors": []
+      }
+    },
+    {
+      "id": "service-relative-param-relative-id",
+      "section": "5.2",
+      "description": "service=%23files resolves to did:test:deref#files and matches the relative id #files",
+      "didUrl": "did:test:deref?service=%23files",
+      "expected": {
+        "content": "<p>files/index.html</p>\n",
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+        "errors": []
+      },
+      "open": "Section 5.3 only describes a DID URL that has a path; with no path, the serviceEndpoint is assumed to be used as is"
+    },
+    {
+      "id": "service-absolute-param-relative-id",
+      "section": "5.2",
+      "description": "An absolute DID URL in the service parameter matches the relative id #files",
+      "didUrl": "did:test:deref?service=did:test:deref%23files",
+      "expected": {
+        "content": "<p>files/index.html</p>\n",
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+        "errors": []
+      }
+    },
+    {
+      "id": "service-relative-param-absolute-id",
+      "section": "5.2",
+      "description": "service=%23mirror matches the absolute id did:test:deref#mirror. One of its two endpoints returns 404, so the client must try the other one (whichever it picks first) and return mirror.json",
+      "didUrl": "did:test:deref?service=%23mirror",
+      "expected": {
+        "content": {
+          "resource": "mirror.json"
+        },
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json",
+        "errors": []
+      }
+    },
+    {
+      "id": "service-type-defines-strategy",
+      "section": "5.1.3",
+      "description": "The selected service's type DIDCommMessaging defines its own handling strategy, so the Default Service Handler is not used. A client with no DIDCommMessaging handler raises HANDLER_NOT_FOUND",
+      "didUrl": "did:test:deref?service=%23didcomm",
+      "expected": {
+        "oneOf": [
+          {
+            "content": {
+              "handler": "DIDCommMessaging",
+              "id": "#didcomm"
+            },
+            "errors": []
+          },
+          {
+            "error": "DEREFERENCING_ERROR_HANDLER_NOT_FOUND"
+          }
+        ]
+      }
+    },
+    {
+      "id": "default-service-handler-ignores-relative-ref",
+      "section": "5.3",
+      "description": "The Default Service Handler does not process relativeRef, so the resource URL is the service endpoint unchanged",
+      "didUrl": "did:test:deref?service=%23files&relativeRef=%2Fdoc.pdf",
+      "expected": {
+        "content": "<p>files/index.html</p>\n",
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+        "errors": []
+      },
+      "open": "Section 3 Example 2 and Section 12.7.1 describe relativeRef being combined with the service endpoint, which contradicts the note in Section 5.3"
+    },
+    {
+      "id": "service-bare-name",
+      "section": "5.2",
+      "description": "service=files with no leading #",
+      "didUrl": "did:test:deref?service=files",
+      "expected": {
+        "oneOf": [
+          {
+            "content": {
+              "$ref": "did-resolution-result.json#/didDocument"
+            },
+            "errors": [
+              "DEREFERENCING_ERROR_SERVICE_NOT_FOUND"
+            ]
+          },
+          {
+            "content": "<p>files/index.html</p>\n",
+            "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+            "errors": []
+          }
+        ]
+      },
+      "open": "Strict RFC3986 reference resolution turns files into did:files, which matches nothing; Section 3 Example 2 and DID Core 1.0 practice match it to #files"
+    },
+    {
+      "id": "service-not-found",
+      "section": "5.1.3",
+      "description": "No service matches, so SERVICE_NOT_FOUND is raised and processing continues to the Default DID Document Step",
+      "didUrl": "did:test:deref?service=%23nope",
+      "expected": {
+        "content": {
+          "$ref": "did-resolution-result.json#/didDocument"
+        },
+        "errors": [
+          "DEREFERENCING_ERROR_SERVICE_NOT_FOUND"
+        ]
+      },
+      "open": "Section 5.2 says to stop further processing instead of continuing"
+    },
+    {
+      "id": "multiple-service-parameters",
+      "section": "5.1.3",
+      "description": "More than one service parameter raises MULTIPLE_SERVICE_PARAMETERS and continues to the Default DID Document Step",
+      "didUrl": "did:test:deref?service=%23files&service=%23mirror",
+      "expected": {
+        "content": {
+          "$ref": "did-resolution-result.json#/didDocument"
+        },
+        "errors": [
+          "DEREFERENCING_ERROR_MULTIPLE_SERVICE_PARAMETERS"
+        ]
+      }
+    },
+    {
+      "id": "service-path-extension",
+      "section": "5.3",
+      "description": "The service path /files/ is stripped and the rest is appended to the endpoint path. The path also matches the #root PathHandler, so this checks the Services Step runs first",
+      "didUrl": "did:test:deref/files/a/report.json?service=%23files",
+      "expected": {
+        "content": {
+          "resource": "files/a/report.json"
+        },
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/a/report.json",
+        "errors": []
+      }
+    },
+    {
+      "id": "service-path-dot-segments-inside",
+      "section": "5.3",
+      "description": "Dot segments that stay inside the endpoint path are removed and allowed",
+      "didUrl": "did:test:deref/files/a/../b.json?service=%23files",
+      "expected": {
+        "content": {
+          "resource": "files/b.json"
+        },
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/b.json",
+        "errors": []
+      }
+    },
+    {
+      "id": "service-path-traversal",
+      "section": "5.3",
+      "description": "The normalized resource path escapes the endpoint path .../resources/files/. Returning the canary secret.json means the client fetched it",
+      "didUrl": "did:test:deref/files/../secret.json?service=%23files",
+      "expected": {
+        "error": "DEREFERENCE_ERROR_PATH_NORMALIZATION_ERROR"
+      },
+      "open": "Section 12.7.1 suggests INVALID_DID_URL for the same case"
+    },
+    {
+      "id": "service-path-traversal-percent-encoded",
+      "section": "12.7.1",
+      "description": "Percent-encoded dot segments are decoded before normalization, so this also escapes .../resources/files/. Returning the canary secret.json means the client fetched it",
+      "didUrl": "did:test:deref/files/%2E%2E/secret.json?service=%23files",
+      "expected": {
+        "error": "DEREFERENCE_ERROR_PATH_NORMALIZATION_ERROR"
+      },
+      "open": "Section 12.7.1 is non-normative; Section 5.3 does not say whether to decode before removing dot segments"
+    },
+    {
+      "id": "service-path-not-prefixed",
+      "section": "5.3",
+      "description": "The DID URL path does not start with the service path /files/",
+      "didUrl": "did:test:deref/other/x?service=%23files",
+      "expected": null,
+      "open": "Section 5.3 does not define what happens when the DID URL path does not start with the service path"
+    },
+    {
+      "id": "path-handler-longest-match-linked-resource",
+      "section": "5.4",
+      "description": "/image.png matches /, /image and /image.png; the longest match #SecuredImage is selected and its secondary type LinkedResource defines the strategy",
+      "didUrl": "did:test:deref/image.png",
+      "expected": {
+        "oneOf": [
+          {
+            "content": {
+              "handler": "LinkedResource",
+              "id": "#SecuredImage"
+            },
+            "errors": []
+          },
+          {
+            "error": "DEREFERENCING_ERROR_HANDLER_NOT_FOUND"
+          }
+        ]
+      }
+    },
+    {
+      "id": "path-handler-path-service",
+      "section": "5.4",
+      "description": "#image is the longest match; PathService defines no strategy, so the Default Service Handler is used",
+      "didUrl": "did:test:deref/image/x.json",
+      "expected": {
+        "content": {
+          "resource": "image/x.json"
+        },
+        "resourceUrl": {
+          "oneOf": [
+            "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/x.json",
+            "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image//x.json"
+          ]
+        },
+        "errors": []
+      },
+      "open": "Stripping /image leaves /x, and appending that to /image/ gives a double slash. The PathHandlers Step also says to raise PATH_HANDLER_HANDLER_NOT_DEFINED when the secondary type defines no strategy"
+    },
+    {
+      "id": "path-handler-segment-boundary",
+      "section": "5.4",
+      "description": "/image is a string prefix of /imagex.json but not a whole path segment",
+      "didUrl": "did:test:deref/imagex.json",
+      "expected": {
+        "oneOf": [
+          {
+            "content": {
+              "resource": "image/x.json"
+            },
+            "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/x.json",
+            "errors": []
+          },
+          {
+            "content": {
+              "resource": "root/imagex.json"
+            },
+            "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/imagex.json",
+            "errors": []
+          }
+        ]
+      },
+      "open": "Section 5.4 says the entire path value must be present at the start of the DID URL path, without saying whether matching is by character or by segment"
+    },
+    {
+      "id": "path-handler-root",
+      "section": "5.4",
+      "description": "Only #root (path /) matches",
+      "didUrl": "did:test:deref/other.json",
+      "expected": {
+        "content": {
+          "resource": "root/other.json"
+        },
+        "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/other.json",
+        "errors": []
+      }
+    },
+    {
+      "id": "path-handler-only-type",
+      "section": "5.3",
+      "description": "#bare has PathHandler as its only type, which Section 5.3 sends to the Default Service Handler",
+      "didUrl": "did:test:deref/bare/y.json",
+      "expected": {
+        "content": {
+          "resource": "bare/y.json"
+        },
+        "resourceUrl": {
+          "oneOf": [
+            "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/y.json",
+            "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare//y.json"
+          ]
+        },
+        "errors": []
+      },
+      "open": "The PathHandlers Step would raise PATH_HANDLER_HANDLER_NOT_DEFINED instead; also has the double-slash question"
+    },
+    {
+      "id": "path-handler-tie",
+      "section": "5.4",
+      "description": "#dupA and #dupB both match with the same length, so MULTIPLE_MATCHING_PATH_HANDLERS is raised and processing continues to the Default DID Document Step",
+      "didUrl": "did:test:deref/dup/x",
+      "expected": {
+        "content": {
+          "$ref": "did-resolution-result.json#/didDocument"
+        },
+        "errors": [
+          "DEREFERENCING_ERROR_MULTIPLE_MATCHING_PATH_HANDLERS"
+        ]
+      },
+      "open": "Section 5.4 says to stop processing and return the error; the PathHandlers Step says to continue"
+    }
+  ]
+}

@@ -1,0 +1,799 @@
+{
+  "name": "Reference Client",
+  "implementationVersion": "0.1.0",
+  "vectorsVersion": "0.1.0",
+  "date": "2026-10-26T16:44:33.605Z",
+  "harness": "https://github.com/wip-abramson/did-resolution-test-suite/blob/main/did-url-dereferencing/reference-client/run.js",
+  "results": {
+    "invalid-not-a-did-url": {
+      "error": "INVALID_DID_URL"
+    },
+    "invalid-uppercase-method": {
+      "error": "INVALID_DID_URL"
+    },
+    "resolution-error": {
+      "error": "DEREFERENCING_ERROR_RESOLUTION_ERROR"
+    },
+    "bare-did": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": []
+    },
+    "fragment": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": []
+    },
+    "version-id": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": []
+    },
+    "service-relative-param-relative-id": {
+      "content": "<p>files/index.html</p>\n",
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+      "errors": []
+    },
+    "service-absolute-param-relative-id": {
+      "content": "<p>files/index.html</p>\n",
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+      "errors": []
+    },
+    "service-relative-param-absolute-id": {
+      "content": {
+        "resource": "mirror.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json",
+      "errors": []
+    },
+    "service-type-defines-strategy": {
+      "content": {
+        "handler": "DIDCommMessaging",
+        "id": "#didcomm"
+      },
+      "errors": []
+    },
+    "default-service-handler-ignores-relative-ref": {
+      "content": "<p>files/index.html</p>\n",
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/",
+      "errors": []
+    },
+    "service-bare-name": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": [
+        "DEREFERENCING_ERROR_SERVICE_NOT_FOUND"
+      ]
+    },
+    "service-not-found": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": [
+        "DEREFERENCING_ERROR_SERVICE_NOT_FOUND"
+      ]
+    },
+    "multiple-service-parameters": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": [
+        "DEREFERENCING_ERROR_MULTIPLE_SERVICE_PARAMETERS"
+      ]
+    },
+    "service-path-extension": {
+      "content": {
+        "resource": "files/a/report.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/a/report.json",
+      "errors": []
+    },
+    "service-path-dot-segments-inside": {
+      "content": {
+        "resource": "files/b.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/b.json",
+      "errors": []
+    },
+    "service-path-traversal": {
+      "error": "DEREFERENCE_ERROR_PATH_NORMALIZATION_ERROR"
+    },
+    "service-path-traversal-percent-encoded": {
+      "error": "DEREFERENCE_ERROR_PATH_NORMALIZATION_ERROR"
+    },
+    "service-path-not-prefixed": {
+      "error": "DEREFERENCING_ERROR_FAILED"
+    },
+    "path-handler-longest-match-linked-resource": {
+      "content": {
+        "handler": "LinkedResource",
+        "id": "#SecuredImage"
+      },
+      "errors": []
+    },
+    "path-handler-path-service": {
+      "content": {
+        "resource": "image/x.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image//x.json",
+      "errors": []
+    },
+    "path-handler-segment-boundary": {
+      "content": {
+        "resource": "image/x.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/x.json",
+      "errors": []
+    },
+    "path-handler-root": {
+      "content": {
+        "resource": "root/other.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/other.json",
+      "errors": []
+    },
+    "path-handler-only-type": {
+      "content": {
+        "resource": "bare/y.json"
+      },
+      "resourceUrl": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare//y.json",
+      "errors": []
+    },
+    "path-handler-tie": {
+      "content": {
+        "@context": [
+          "https://www.w3.org/ns/did/v1.1"
+        ],
+        "id": "did:test:deref",
+        "verificationMethod": [
+          {
+            "id": "#key-1",
+            "type": "Multikey",
+            "controller": "did:test:deref",
+            "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+          }
+        ],
+        "authentication": [
+          "#key-1"
+        ],
+        "service": [
+          {
+            "id": "#files",
+            "type": "FileService",
+            "path": "/files/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/files/"
+          },
+          {
+            "id": "did:test:deref#mirror",
+            "type": "FileService",
+            "serviceEndpoint": [
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror-missing.json",
+              "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/mirror.json"
+            ]
+          },
+          {
+            "id": "#didcomm",
+            "type": "DIDCommMessaging",
+            "serviceEndpoint": {
+              "uri": "https://didcomm.example/inbox",
+              "accept": [
+                "didcomm/v2"
+              ]
+            }
+          },
+          {
+            "id": "#root",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/root/"
+          },
+          {
+            "id": "#image",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/image",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/image/"
+          },
+          {
+            "id": "#dupA",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-a/"
+          },
+          {
+            "id": "#dupB",
+            "type": [
+              "PathHandler",
+              "PathService"
+            ],
+            "path": "/dup",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/dup-b/"
+          },
+          {
+            "id": "#bare",
+            "type": "PathHandler",
+            "path": "/bare",
+            "serviceEndpoint": "https://wip-abramson.github.io/did-resolution-test-suite/did-url-dereferencing/fixtures/resources/bare/"
+          }
+        ],
+        "linkedResource": [
+          {
+            "id": "#SecuredImage",
+            "type": [
+              "PathHandler",
+              "LinkedResource"
+            ],
+            "path": "/image.png"
+          }
+        ]
+      },
+      "errors": [
+        "DEREFERENCING_ERROR_MULTIPLE_MATCHING_PATH_HANDLERS"
+      ]
+    }
+  }
+}

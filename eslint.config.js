@@ -17,5 +17,11 @@ export default [
         URL: 'readonly'
       }
     }
+  },
+  {
+    files: ['did-url-dereferencing/**'],
+    languageOptions: {
+      globals: {...globals.node, ...globals.mocha}
+    }
   }
 ];

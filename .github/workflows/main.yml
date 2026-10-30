@@ -51,6 +51,11 @@ jobs:
       - name: Run test with Node.js ${{ matrix.node-version }}
         run: npm run test
         continue-on-error: true
+      - name: Run DID URL dereferencing report
+        run: npm run test:dereferencing
+        continue-on-error: true
+      - name: Add dereferencing fixtures to Pages
+        run: mkdir -p reports/did-url-dereferencing/fixtures && cp -r did-url-dereferencing/fixtures/resources reports/did-url-dereferencing/fixtures/
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8 # v4.7.3
         with:

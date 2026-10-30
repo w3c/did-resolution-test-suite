@@ -1,0 +1,10 @@
+{
+  "didDocument": null,
+  "didResolutionMetadata": {
+    "error": {
+      "type": "https://www.w3.org/ns/did#NOT_FOUND",
+      "title": "DID not found"
+    }
+  },
+  "didDocumentMetadata": {}
+}

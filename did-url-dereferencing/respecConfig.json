@@ -1,0 +1,20 @@
+{
+  "specStatus": "NOTE",
+  "group": "did",
+  "shortName": "did-url-dereferencing-test-suite",
+  "subtitle": "Interoperability Report for DID URL Dereferencing",
+  "github": "https://github.com/w3c/did-resolution-test-suite",
+  "edDraftURI": "https://w3c.github.io/did-resolution-test-suite/did-url-dereferencing/",
+  "doJsonLd": true,
+  "includePermalinks": false,
+  "editors": [
+    {
+      "name": "Will Abramson",
+      "mailto": "will@legreq.com",
+      "company": "Legendary Requirements",
+      "companyUrl": "http://legreq.com",
+      "w3cid": 107490
+    }
+  ],
+  "authors": []
+}
