@@ -1,0 +1,28 @@
+{
+  "valid": [
+    {
+      "did": "did:cheqd:testnet:d76447b9-f925-42f1-8c7d-55f0a32cc669",
+      "resolutionOptions": {}
+    },
+    {
+      "did": "did:cheqd:mainnet:8c5ed308-8695-41fe-9750-4c5b2a714cff",
+      "resolutionOptions": {}
+    }
+  ],
+  "notFound": [
+    {
+      "did": "did:cheqd:testnet:d76447b9-f925-42f1-8c7d-55f0a32cc66",
+      "resolutionOptions": {}
+    },
+    {
+      "did": "did:cheqd:mainnet:8c5ed308-8695-41fe-9750-4c5b2a714cf",
+      "resolutionOptions": {}
+    }
+  ],
+  "deactivated": [
+    {
+      "did": "did:cheqd:testnet:4fb1cf4e-55bc-41d7-916a-14fad0c5ed77",
+      "resolutionOptions": {}
+    }
+  ]
+}
