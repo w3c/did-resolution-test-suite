@@ -1,0 +1,8 @@
+{
+  "name": "Digital Contract Design",
+  "implementation": "BTCR2 Rust Resolver",
+  "endpoint": "https://143-198-140-182.sslip.io/1.0/identifiers",
+  "supportedDidMethods": [
+    "did:btcr2"
+  ]
+}

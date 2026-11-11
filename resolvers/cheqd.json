@@ -1,0 +1,8 @@
+{
+  "name": "cheqd",
+  "implementation": "cheqd Resolver",
+  "endpoint": "https://resolver.cheqd.net/1.0/identifiers",
+  "supportedDidMethods": [
+    "did:cheqd"
+  ]
+}
