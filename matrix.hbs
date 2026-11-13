@@ -1,0 +1,134 @@
+<section class="informative" id="{{matrix.title}}">
+  <h2>{{matrix.title}}</h2>
+  {{#if matrix.didMethods}}
+  <!-- DID method filter: see the script at the end of this template -->
+  <p>
+    <label>Show results for
+      <select class="did-method-filter">
+        <option value="">All DID methods</option>
+        {{#each matrix.didMethods}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </label>
+  </p>
+  {{/if}}
+  <div class="row">
+    <table class="simple">
+      <thead>
+        <th width="20%">
+          <div class="text-right small-font">
+          {{matrix.columnLabel}} &#8658;
+          </div>
+          <div class="text-left small-font">
+          <span>&#8659;</span><span>{{matrix.rowLabel}}</span>
+          </div>
+        </th>
+          {{#each matrix.columns}}
+            <th class="no-wrap small-font text-center">{{this}}</th>
+          {{/each}}
+        </thead>
+      <tbody>
+    {{#each matrix.rows}}
+      <tr class="{{atRisk cells}}">
+        <!--This is the name of the test-->
+        <td class="subtest">
+          {{#if link}}
+            <a href="{{link}}">{{id}}</a>
+          {{else}}
+            {{id}}
+          {{/if}}
+        </td>
+        <!--These contain if the test passed, failed, or was skipped-->
+        {{#each cells}}
+          <td class="{{state}} {{getOptional optional}} highlight-on-hover text-center" data-state="{{state}}">
+            <div class="cell-result">
+              <div class= "highlight-on-hover">{{getStatusMark state}}</div>
+              {{> error.hbs error=err}}
+            </div>
+            {{#if byMethod}}
+            <!-- the result for each DID method, swapped in by the filter -->
+            <template data-method="">
+              <div class= "highlight-on-hover">{{getStatusMark state}}</div>
+              {{> error.hbs error=err}}
+            </template>
+            {{#each byMethod}}
+            <template data-method="{{@key}}" data-state="{{state}}">
+              <div class= "highlight-on-hover">{{getStatusMark state}}</div>
+              {{> error.hbs error=err}}
+            </template>
+            {{/each}}
+            {{/if}}
+          </td>
+        {{/each}}
+      </tr>
+    {{/each}}
+    </tbody>
+    </table>
+  </div>
+  <div>
+    <div class="flex-center">
+      <div class="row">
+        {{#if matrix.images}}
+          {{#each matrix.images}}
+            <img class="qr-code" src={{{this.src}}} />
+            {{#each this.meta}}
+              <div class="text-center small-font">
+                {{this}}
+              </div>
+            {{/each}}
+          {{/each}}
+        {{/if}}
+      </div>
+      <div class="">
+        {{#if matrix.reportData}}
+          {{#each matrix.reportData}}
+            {{#if this.details}}
+              <details>
+                <summary>{{this.label}}</summary>
+                <pre class="small-font">{{{this.data}}}</pre>
+              </details>
+            {{else}}
+              <pre class="small-font">{{{this.data}}}</pre>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</section>
+{{#if matrix.didMethods}}
+<script>
+  // Show each result cell for the chosen DID method. Cells of tests that run
+  // per DID method carry a <template> per method; a resolver without results
+  // for the method shows "not implemented". Other cells don't depend on the
+  // DID method and are left alone. Listens on document so it still works
+  // after ReSpec rearranges the page, and only once for all matrices.
+  if(!window.didMethodFilter) {
+    window.didMethodFilter = true;
+    document.addEventListener('change', event => {
+      const select = event.target.closest('select.did-method-filter');
+      if(!select) {
+        return;
+      }
+      const method = select.value;
+      const cells = select.closest('section')
+        .querySelectorAll('td[data-state]');
+      for(const cell of cells) {
+        if(!cell.querySelector('template')) {
+          continue;
+        }
+        cell.dataset.defaultState ??= cell.dataset.state;
+        const template = cell.querySelector(
+          `template[data-method="${CSS.escape(method)}"]`);
+        const state = !template ? 'notImplemented' :
+          template.dataset.state ?? cell.dataset.defaultState;
+        cell.classList.replace(cell.dataset.state, state);
+        cell.dataset.state = state;
+        cell.querySelector('.cell-result').innerHTML = template ?
+          template.innerHTML : '<div>&#8212;</div>';
+      }
+    });
+  }
+</script>
+{{/if}}

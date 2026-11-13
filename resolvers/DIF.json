@@ -1,0 +1,10 @@
+{
+  "name": "DIF",
+  "implementation": "Universal Resolver",
+  "endpoint": "https://dev.uniresolver.io/1.0/identifiers",
+  "supportedDidMethods": [
+    "did:key",
+    "did:btcr2",
+    "did:webvh"
+  ]
+}

@@ -1,15 +1,13 @@
 import * as chai from 'chai';
-import {addQueryParametersToUrl, cachedFetch} from './helpers.js';
+import {addQueryParametersToUrl, cachedFetch, forEachTestCase, resolvers,
+  testedDidMethods} from './helpers.js';
 import {checkErrorResolutionResult,
   checkSuccessfulResolutionResult} from './assertions.js';
-import {filterByTag} from 'vc-test-suite-implementations';
 import {helpers} from 'mocha-w3c-interop-reporter';
 
 // eslint-disable-next-line no-unused-vars
 const should = chai.should();
 const expect = chai.expect;
-const tag = 'did-resolution';
-const {match} = filterByTag({tags: [tag], property: 'didResolvers'});
 
 const DID_RESOLUTION_MEDIA_TYPE = 'application/did-resolution';
 
@@ -25,18 +23,16 @@ const ERROR_STATUS_CODES = {
   INTERNAL_ERROR: 500
 };
 
-describe('10.1 HTTP(S) Binding', function() {
-  helpers.setupMatrix.call(this, match);
-  for(const [name, implementation] of match) {
-    // Only the first didResolver tagged `did-resolution` is tested; any
-    // others tagged for this suite are ignored
-    const didResolver = implementation.settings.didResolvers
-      .find(({tags}) => tags.includes(tag));
-    const endpoint = didResolver.endpoint;
-    const validDids = didResolver.supportedDids.valid;
-    // These fields are optional in the implementation config
-    const deactivatedDids = didResolver.supportedDids.deactivated || [];
-    const notFoundDids = didResolver.supportedDids.notFound || [];
+describe('10.1 HTTPS Binding', function() {
+  helpers.setupMatrix.call(this, resolvers);
+  // read by matrix.hbs to offer a DID method filter
+  this.didMethods = testedDidMethods;
+  for(const [name, {endpoint, validDids, notFoundDids, deactivatedDids}]
+    of resolvers) {
+    const resolve = ({did, resolutionOptions}, accept =
+      DID_RESOLUTION_MEDIA_TYPE) => cachedFetch(
+      addQueryParametersToUrl(`${endpoint}/${did}`, resolutionOptions),
+      accept);
 
     describe(name, function() {
       beforeEach(helpers.setupRow);
@@ -48,18 +44,17 @@ describe('10.1 HTTP(S) Binding', function() {
         expect(endpoint).to.match(/^https:\/\//);
       });
 
-      // Normative: "All conforming DID resolvers MUST implement the
-      // GET version"
-      validDids.forEach(({did, resolutionOptions}) => {
-        const baseUrl = `${endpoint}/${did}`;
-        const url = addQueryParametersToUrl(baseUrl, resolutionOptions);
-
+      if(validDids.length > 0) {
+        // Normative: "All conforming DID resolvers MUST implement the
+        // GET version"
         it('All conforming DID resolvers MUST implement the GET ' +
           'version of the HTTPS binding', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.ok.should.be.true;
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.ok.should.be.true;
+          });
         });
 
         // Normative: "If the value of the Content-Type HTTP response header is
@@ -69,10 +64,11 @@ describe('10.1 HTTP(S) Binding', function() {
           'contain a DID resolution result', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.ok.should.be.true;
-          const resolutionResult = await rv.json();
-          checkSuccessfulResolutionResult(resolutionResult);
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.ok.should.be.true;
+            checkSuccessfulResolutionResult(await rv.json());
+          });
         });
 
         // Normative: "If the function is successful and returns a didDocument:
@@ -81,8 +77,10 @@ describe('10.1 HTTP(S) Binding', function() {
           'HTTP response status code MUST be 200', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.status.should.equal(200);
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.status.should.equal(200);
+          });
         });
 
         // Normative: "The HTTP response MUST contain a Content-Type HTTP
@@ -93,31 +91,36 @@ describe('10.1 HTTP(S) Binding', function() {
           'contentType in didResolutionMetadata', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.ok.should.be.true;
-          const contentTypeHeader = rv.headers.get('Content-Type');
-          expect(contentTypeHeader,
-            'Content-Type response header must be present').to.not.be.null;
-          const resolutionResult = await rv.json();
-          expect(resolutionResult.didResolutionMetadata,
-            'didResolutionMetadata must contain a contentType property')
-            .to.have.property('contentType');
-          contentTypeHeader.should.include(
-            resolutionResult.didResolutionMetadata.contentType);
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.ok.should.be.true;
+            const contentTypeHeader = rv.headers.get('Content-Type');
+            expect(contentTypeHeader,
+              'Content-Type response header must be present').to.not.be.null;
+            const resolutionResult = await rv.json();
+            expect(resolutionResult.didResolutionMetadata,
+              'didResolutionMetadata must contain a contentType property')
+              .to.have.property('contentType');
+            contentTypeHeader.should.include(
+              resolutionResult.didResolutionMetadata.contentType);
+          });
         });
 
         // Normative: "The HTTP response body MUST contain the didDocument that
-        //   is the result of the DID resolution function, in the representation
-        //   corresponding to the Content-Type HTTP response header"
+        //   is the result of the DID resolution function, in the
+        //   representation corresponding to the Content-Type HTTP response
+        //   header"
         it('HTTP response body MUST contain the didDocument result ' +
           'of the DID resolution function', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.ok.should.be.true;
-          const resolutionResult = await rv.json();
-          resolutionResult.should.have.property('didDocument');
-          resolutionResult.didDocument.should.be.an('object');
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.ok.should.be.true;
+            const resolutionResult = await rv.json();
+            resolutionResult.should.have.property('didDocument');
+            resolutionResult.didDocument.should.be.an('object');
+          });
         });
 
         // Normative: "set the Accept HTTP request header to the value of the
@@ -128,17 +131,19 @@ describe('10.1 HTTP(S) Binding', function() {
           '(not the full resolution result)', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, 'application/did+json');
-          if(rv.status === 406) {
-            // did+json is not supported, so nothing to test
-            this.skip();
-          }
-          rv.ok.should.be.true;
-          const body = await rv.json();
-          // A bare DID document has an 'id' property; a full resolution
-          // result would have 'didResolutionMetadata' instead
-          body.should.have.property('id');
-          body.should.not.have.property('didResolutionMetadata');
+          await forEachTestCase(this, validDids, async testCase => {
+            const rv = await resolve(testCase, 'application/did+json');
+            if(rv.status === 406) {
+              // did+json is not supported, so nothing to test
+              return 'pending';
+            }
+            rv.ok.should.be.true;
+            const body = await rv.json();
+            // A bare DID document has an 'id' property; a full resolution
+            // result would have 'didResolutionMetadata' instead
+            body.should.have.property('id');
+            body.should.not.have.property('didResolutionMetadata');
+          });
         });
 
         // Normative (GET): "If any other resolution options or dereferencing
@@ -151,16 +156,15 @@ describe('10.1 HTTP(S) Binding', function() {
           'options other than accept are provided)', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const encodedDid = encodeURIComponent(did);
-          const encodedUrl = addQueryParametersToUrl(
-            `${endpoint}/${encodedDid}`, resolutionOptions
-          );
-          const rv = await cachedFetch(encodedUrl, DID_RESOLUTION_MEDIA_TYPE);
-          rv.ok.should.be.true;
-          const resolutionResult = await rv.json();
-          checkSuccessfulResolutionResult(resolutionResult);
+          await forEachTestCase(this, validDids,
+            async ({did, resolutionOptions}) => {
+              const rv = await resolve(
+                {did: encodeURIComponent(did), resolutionOptions});
+              rv.ok.should.be.true;
+              checkSuccessfulResolutionResult(await rv.json());
+            });
         });
-      });
+      }
 
       // --- Error → HTTP status code mapping ---
 
@@ -188,40 +192,33 @@ describe('10.1 HTTP(S) Binding', function() {
       });
 
       // Normative: "NOT_FOUND → 404"
-      // Requires one or more notFoundDids to be set in the implementation
-      // config, each as an object: {did, resolutionOptions}
-      notFoundDids.forEach(({did, resolutionOptions}) => {
-        const baseUrl = `${endpoint}/${did}`;
-        const url = addQueryParametersToUrl(baseUrl, resolutionOptions);
-
+      if(notFoundDids.length > 0) {
         it('NOT_FOUND error MUST map to HTTP status 404', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.status.should.equal(ERROR_STATUS_CODES.NOT_FOUND);
-          const resolutionResult = await rv.json();
-          checkErrorResolutionResult(resolutionResult,
-            'https://www.w3.org/ns/did#NOT_FOUND');
+          await forEachTestCase(this, notFoundDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.status.should.equal(ERROR_STATUS_CODES.NOT_FOUND);
+            checkErrorResolutionResult(await rv.json(),
+              'https://www.w3.org/ns/did#NOT_FOUND');
+          });
         });
-      });
+      }
 
       // Normative: "If the DID resolution or DID URL dereferencing function
       //   returns a deactivated metadata property with the value true …
       //   The HTTP response status code MUST be 410"
-      // Requires deactivatedDids: [{did, resolutionOptions}] in the
-      // implementation config
-      deactivatedDids.forEach(({did, resolutionOptions}) => {
-        const baseUrl = `${endpoint}/${did}`;
-        const url = addQueryParametersToUrl(baseUrl, resolutionOptions);
-
+      if(deactivatedDids.length > 0) {
         it('If deactivated metadata property is true, ' +
           'HTTP response status MUST be 410', async function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
-          const rv = await cachedFetch(url, DID_RESOLUTION_MEDIA_TYPE);
-          rv.status.should.equal(410);
+          await forEachTestCase(this, deactivatedDids, async testCase => {
+            const rv = await resolve(testCase);
+            rv.status.should.equal(410);
+          });
         });
-      });
+      }
     });
   }
 });

@@ -1,0 +1,8 @@
+{
+  "name": "iden3",
+  "implementation": "iden3 Resolver",
+  "endpoint": "https://resolver.privado.id/1.0/identifiers",
+  "supportedDidMethods": [
+    "did:iden3"
+  ]
+}
