@@ -132,9 +132,10 @@ describe('10.1 HTTPS Binding', function() {
           this.test.link =
             'https://w3c.github.io/did-resolution/#bindings-https';
           await forEachTestCase(this, validDids, async testCase => {
-            const rv = await resolve(testCase, 'application/did+json');
+            // application/did is the DID document media type in DID 1.1
+            const rv = await resolve(testCase, 'application/did');
             if(rv.status === 406) {
-              // did+json is not supported, so nothing to test
+              // application/did is not supported, so nothing to test
               return 'pending';
             }
             rv.ok.should.be.true;
